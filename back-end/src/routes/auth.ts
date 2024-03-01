@@ -3,11 +3,12 @@ import express, { Request, Response } from "express";
 import { check, validationResult } from "express-validator";
 import User from "../models/user";
 import jwt from "jsonwebtoken";
+import verifyToken from "../middleware/auth";
 
 const router = express.Router();
 
 router.post(
-  "/login",
+  "/sign-in",
   [
     check("email", "Email is required").isEmail(),
     check("password", "Password with 6 or more characters required").isLength({
@@ -46,5 +47,18 @@ router.post(
     }
   }
 );
+
+router.get(
+  "/validate-token",
+  verifyToken,
+  async (req: Request, res: Response) => {
+    res.status(200).send({ userId: req.userId });
+  }
+);
+
+router.post("/logout", (req: Request, res: Response) => {
+  res.clearCookie("auth_token");
+  res.status(200).send("Logged out");
+});
 
 export default router;
