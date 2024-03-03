@@ -5,6 +5,7 @@ import mongoose from "mongoose";
 import userRoutes from "./routes/users";
 import authRoutes from "./routes/auth";
 import cookieParser from "cookie-parser";
+import path from "path";
 
 mongoose.connect(process.env.MONGO_URI as string).then(() => {
   console.log("Connected to MongoDB");
@@ -21,6 +22,8 @@ app.use(
     credentials: true,
   })
 );
+
+app.use(express.static(path.join(__dirname, "../../front-end/dist")));
 
 app.use("/api/auth", authRoutes);
 app.use("/api/users", userRoutes);
