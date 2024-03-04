@@ -37,6 +37,10 @@ app.use("/api/auth", authRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/my-hotels", myHotelRoutes);
 
+app.get("*", (req: Request, res: Response) => {
+  res.sendFile(path.join(__dirname, "../../front-end/dist/index.html"));
+});
+
 // const PORT = process.env.PORT || 7000;
 app.listen(7000, () => {
   console.log(`Server is running on port ${7000}`);
