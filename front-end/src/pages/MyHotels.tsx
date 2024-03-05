@@ -28,7 +28,10 @@ const MyHotels = () => {
       </span>
       <div className="grid grid-cols-1 gap-8">
         {hotelData?.map((hotel) => (
-          <div className="flex flex-col justify-between gap-5 p-8 border rounded-lg border-slate-300">
+          <div
+            key={hotel._id}
+            className="flex flex-col justify-between gap-5 p-8 border rounded-lg border-slate-300"
+          >
             <h2 className="text-2xl font-bold">{hotel.name}</h2>
             <div className="whitespace-pre-line">{hotel.description}</div>
             <div className="grid grid-cols-5 gap-2">
