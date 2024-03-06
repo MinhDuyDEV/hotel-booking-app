@@ -144,11 +144,22 @@ export const searchHotels = async (
   searchParams.stars?.forEach((star) => queryParams.append("stars", star));
 
   const response = await fetch(
-    `${API_BASE_URL}/api/hotels/search?${queryParams}`,
-    {}
+    `${API_BASE_URL}/api/hotels/search?${queryParams}`
   );
+
   if (!response.ok) {
-    throw new Error("Failed to search hotels");
+    throw new Error("Error fetching hotels");
+  }
+
+  return response.json();
+};
+
+export const fetchHotelById = async (hotelId: string): Promise<HotelType> => {
+  const response = await fetch(`${API_BASE_URL}/api/hotels/${hotelId}`, {
+    credentials: "include",
+  });
+  if (!response.ok) {
+    throw new Error("Failed to fetch hotel");
   }
   return response.json();
 };
